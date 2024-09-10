@@ -30,13 +30,37 @@ test('', async ({ page }) => {
   await page.waitForURL('**/collect-code');
   
   await expect(page.locator('.victim > img')).toBeVisible();
-  await page.locator('.victim > img').click({ position: { x: 325, y: 310 }, force: true, timeout: 60000 });
+  await page.locator('.victim > img').click({ position: { x: 198, y: 192 }, force: true, timeout: 60000 });
 
   
   await expect(page.locator('.murder')).toBeVisible();
   const code = await page.locator('.murder').textContent();
 
   console.log(code);
+
+  await page.locator('body').click();
+  
+  await page.locator('.ski-button').click();
+
+  await skipTransition(page);
+
+  await page.waitForURL('**/gate');
+
+  await page.locator('#numpad').click()
+
+  await page.waitForTimeout(1000)
+
+  for (const number of code!) {
+    await page.locator(`//*[@id="${number}"]`).click()
+  }
+
+  await page.locator('#enter').click()
+
+  await expect(page.locator('#back-button')).toBeVisible()
+
+  await page.locator('body').press('ArrowUp')
+
+  await skipTransition(page);
 });
 
 const skipTransition = async (page: Page) => {
