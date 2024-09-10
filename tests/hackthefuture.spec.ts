@@ -32,11 +32,8 @@ test('', async ({ page }) => {
   await expect(page.locator('.victim > img')).toBeVisible();
   await page.locator('.victim > img').click({ position: { x: 198, y: 192 }, force: true, timeout: 60000 });
 
-  
   await expect(page.locator('.murder')).toBeVisible();
   const code = await page.locator('.murder').textContent();
-
-  console.log(code);
 
   await page.locator('body').click();
   
@@ -60,6 +57,24 @@ test('', async ({ page }) => {
 
   await page.locator('body').press('ArrowUp')
 
+  await skipTransition(page);
+
+  await page.locator('#inputField').fill('Merlijn')
+  await page.locator('.input').click()
+
+  await page.locator('#inputField').fill('Earth')
+  await page.locator('.input').click()
+
+  await page.locator('button').getByText('Yes').click();
+
+  await page.locator('button').getByText('I think so?').click();
+
+  await page.locator('.next').locator('button').click()
+  await page.locator('.next').locator('button').click()
+  await page.locator('.next').locator('button').click()
+
+  await page.locator('button').getByText('I think so').click();
+  
   await skipTransition(page);
 });
 
